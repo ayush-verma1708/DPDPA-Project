@@ -96,9 +96,9 @@ const UserCreation = () => {
               <TableCell>Username</TableCell>
               <TableCell>Password</TableCell>
               <TableCell>Role</TableCell>
-              <TableCell>View</TableCell>
-              <TableCell>Add</TableCell>
-              <TableCell>Edit</TableCell>
+              <TableCell>Executive</TableCell>
+              <TableCell>IT Team</TableCell>
+              <TableCell>Auditor</TableCell>
               <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
@@ -164,7 +164,7 @@ const UserCreation = () => {
                     onChange={(e) => setPermissions({ ...permissions, view: e.target.checked })}
                   />
                 }
-                label="View"
+                label="Executive"
               />
               <FormControlLabel
                 control={
@@ -173,7 +173,7 @@ const UserCreation = () => {
                     onChange={(e) => setPermissions({ ...permissions, add: e.target.checked })}
                   />
                 }
-                label="Add"
+                label="IT Team"
               />
               <FormControlLabel
                 control={
@@ -182,7 +182,7 @@ const UserCreation = () => {
                     onChange={(e) => setPermissions({ ...permissions, edit: e.target.checked })}
                   />
                 }
-                label="Edit"
+                label="Auditor"
               />
             </FormControl>
             <Button type="submit" variant="contained" color="primary">

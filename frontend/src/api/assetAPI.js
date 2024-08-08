@@ -45,6 +45,10 @@ export const deleteAsset = async (id) => {
   const response = await axios.delete(`${API_URL_ASSET_DELETE}${id}`);
   return response.data;
 };
+
+
+
+
 // import axios from 'axios';
 
 // const API_URL_ASSET = 'http://localhost:8021/api/v1/assets/';
