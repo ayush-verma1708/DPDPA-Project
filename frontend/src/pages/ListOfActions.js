@@ -4,7 +4,7 @@ import { fetchControls } from '../api/ControlAPI';
 import { fetchActions } from '../api/actionAPI';
 import { getAssetDetails, getScopedInAsset } from '../api/assetDetailsApi';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Snackbar, Alert, Select, MenuItem, Grid
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Snackbar, Alert, Select, MenuItem, Grid, Tooltip
 } from '@mui/material';
 import Loading from '../components/Loading';
 import '../styles/ListOfActions.css';
@@ -30,33 +30,6 @@ const ListOfActions = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadSuccess, setUploadSuccess] = useState(false); // New state for upload success notification
 
-  // const handleFileUpload = async (actionId) => {
-  //   if (!selectedFile) return;
-
-  //   const formData = new FormData();
-  //   formData.append('file', selectedFile);
-
-  //   try {
-  //     const response = await axios.put(`http://localhost:8021/api/v1/actions/${actionId}/upload`, formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data'
-  //       }
-  //     });
-
-  //     if (response.status === 200) {
-  //       // Show success notification
-  //       setUploadSuccess(true);
-  //       // Update actions state with the new file path if necessary
-  //       console.log('File uploaded successfully:', response.data.filePath);
-  //       fetchActions();
-  //     } else {
-  //       throw new Error('Failed to upload file.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error uploading file:', error.response ? error.response.data : error.message);
-  //     setError('Failed to upload file.');
-  //   }
-  // };
 
   const handleFileUpload = async (actionId) => {
     if (!selectedFile) return;
@@ -273,8 +246,9 @@ const ListOfActions = () => {
           </Select>
         )}
       </div>
-      <div className="sidebar">
+      {/* <div className="sidebar">
         {controlFamilies.map(family => (
+          
           <div key={family._id} className="control-family">
             <div className="control-family-header" onClick={() => handleFamilyClick(family._id)}>
               {family.name}
@@ -291,6 +265,39 @@ const ListOfActions = () => {
               </div>
             )}
           </div>
+        ))}
+      </div>
+       */}
+         <div className="sidebar">
+        {controlFamilies.map(family => (
+          <Tooltip
+            key={family._id}
+            title={`Total Controls: ${family.info.controlsCount}, Completed Controls: ${family.info.completedControls}`}
+            placement="right"
+          >
+            <div className="control-family">
+              <div className="control-family-header" onClick={() => handleFamilyClick(family._id)}>
+                {family.name}
+              </div>
+              {expandedFamilyId === family._id && (
+                <div className="controls">
+                  {controls
+                    .filter(control => control.control_Family_Id._id === family._id)
+                    .map(control => (
+                      <Tooltip
+                        key={control._id}
+                        title={`Total Actions: ${control.info.actionsCount}, Completed Actions: ${control.info.completedActions}`}
+                        placement="right"
+                      >
+                        <div className="control" onClick={() => handleControlClick(control._id)}>
+                          {control.name}
+                        </div>
+                      </Tooltip>
+                    ))}
+                </div>
+              )}
+            </div>
+          </Tooltip>
         ))}
       </div>
       <div className="content">
